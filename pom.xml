@@ -367,7 +367,7 @@
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-analysis</artifactId>
-                <version>9.2</version>
+                <version>9.3</version>
             </dependency>
             <dependency>
                 <!-- Adhoc license, copyright holder is INRIA -->
