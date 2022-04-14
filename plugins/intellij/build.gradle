@@ -38,7 +38,7 @@ dependencies {
 // See https://www.jetbrains.com/intellij-repository/releases/
 // See https://www.jetbrains.com/intellij-repository/snapshots/
 intellij {
-    version.set("212.5457.46")
+    version.set("2022.1")
     updateSinceUntilBuild.set(false)
 }
 

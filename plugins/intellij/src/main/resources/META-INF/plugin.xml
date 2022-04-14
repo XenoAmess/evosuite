@@ -75,22 +75,20 @@
     <!-- Add your extensions here -->
   </extensions>
 
-  <application-components>
-    <!-- Add your application components here -->
-      <component>
-          <implementation-class>org.evosuite.intellij.ApplicationRegistration</implementation-class>
-      </component>
-  </application-components>
-
-  <project-components>
-    <!-- Add your project components here -->
-      <component>
-          <implementation-class>org.evosuite.intellij.ProjectRegistration</implementation-class>
-      </component>
-  </project-components>
-
   <actions>
-    <!-- Add your actions here -->
+<!--    <action id="org.evosuite.intellij.EvoAction" class="org.evosuite.intellij.EvoAction" text="Run EvoAction" description="Run EvoAction" icon="EvosuiteIcons.EVOSUITE_ICON">-->
+<!--      <add-to-group group-id="MainToolBar" anchor="last"/>-->
+<!--      <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>-->
+<!--      <add-to-group group-id="ChangesViewPopupMenu" anchor="last"/>-->
+<!--      <add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
+<!--    </action>-->
   </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity
+            implementation="org.evosuite.intellij.startup.ApplicationRegistration"/>
+    <postStartupActivity
+            implementation="org.evosuite.intellij.startup.ProjectRegistration"/>
+  </extensions>
 
 </idea-plugin>
