@@ -22,7 +22,7 @@ allprojects {
 }
 
 group 'com.xenoamess'
-version '1.0.5.2x-SNAPSHOT'
+version '1.0.5.2x'
 
 intellij {
     plugins.set(Arrays.asList("com.intellij.java"))
