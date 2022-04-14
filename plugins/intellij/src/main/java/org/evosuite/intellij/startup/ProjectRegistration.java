@@ -17,25 +17,31 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with EvoSuite. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.evosuite.intellij;
+package org.evosuite.intellij.startup;
+
+import java.awt.BorderLayout;
+import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import com.intellij.execution.filters.TextConsoleBuilderFactory;
 import com.intellij.execution.impl.ConsoleViewImpl;
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.ActionToolbar;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
-import com.intellij.openapi.components.ProjectComponent;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.startup.StartupActivity;
+import com.intellij.openapi.ui.ComponentContainer;
+import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowAnchor;
 import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.openapi.wm.ToolWindowType;
 import com.intellij.ui.content.Content;
 import com.intellij.ui.content.ContentFactory;
+import org.evosuite.intellij.EvoParameters;
+import org.evosuite.intellij.IntelliJNotifier;
+import org.evosuite.intellij.StopEvoAction;
 import org.jetbrains.annotations.NotNull;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Entry point for the IntelliJ plugin for when projects are opened/closed
@@ -43,37 +49,21 @@ import java.awt.*;
  * <p/>
  * Created by arcuri on 9/9/14.
  */
-public class ProjectRegistration implements ProjectComponent { //implements ApplicationComponent {
-
-    private final Project project;
-
-    private ConsoleViewImpl console;
-
-    public ProjectRegistration(Project project) {
-        this.project = project;
-    }
-
-
-    // Returns the component name (any unique string value).
-    @NotNull
-    public String getComponentName() {
-        return "EvoSuite Plugin";
-    }
-
-
-    // If you register the ProjectRegistration class in the <application-components> section of
-// the plugin.xml file, this method is called on IDEA start-up.
-    public void initComponent() {
-
-    }
+public class ProjectRegistration implements StartupActivity {
 
     @Override
-    public void disposeComponent() {
-        EvoParameters.getInstance().save(project);
-    }
+    public void runActivity(@NotNull final Project project) {
 
-    @Override
-    public void projectOpened() {
+        Disposer.register(
+                project,
+                () -> {
+                    EvoParameters.getInstance().save(project);
+                    ComponentContainer console = TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+                    if (console != null) {
+                        console.dispose();
+                    }
+                }
+        );
 
         EvoParameters.getInstance().load(project);
 
@@ -87,7 +77,7 @@ public class ProjectRegistration implements ProjectComponent { //implements Appl
 
 
         //create a console panel
-        console = (ConsoleViewImpl) TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
+        ConsoleViewImpl console = (ConsoleViewImpl) TextConsoleBuilderFactory.getInstance().createBuilder(project).getConsole();
         ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
         JComponent consolePanel = console.getComponent();
 
@@ -110,15 +100,6 @@ public class ProjectRegistration implements ProjectComponent { //implements Appl
         //Content content = contentFactory.createContent(consolePanel, "", false);
         Content content = contentFactory.createContent(panel, "", false);
         toolWindow.getContentManager().addContent(content);
-
-    }
-
-    @Override
-    public void projectClosed() {
-        EvoParameters.getInstance().save(project);
-        if (console != null) {
-            console.dispose();
-        }
     }
 
 }
