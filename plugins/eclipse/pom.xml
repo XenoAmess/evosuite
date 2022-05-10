@@ -30,14 +30,14 @@
         <jdk>[9,)</jdk>
       </activation>
       <properties>
-        <tycho-version>2.7.0</tycho-version>
+        <tycho-version>2.7.3</tycho-version>
         <eclipse-repo.url>http://download.eclipse.org/releases/2021-09</eclipse-repo.url>
       </properties>
     </profile>
   </profiles>
 
   <properties>
-    <tycho-version>2.7.0</tycho-version>
+    <tycho-version>2.7.3</tycho-version>
     <eclipse-repo.url>http://download.eclipse.org/releases/2021-09</eclipse-repo.url>
   </properties>
 
