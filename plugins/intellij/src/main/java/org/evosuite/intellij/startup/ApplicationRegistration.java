@@ -17,11 +17,14 @@
  * You should have received a copy of the GNU Lesser General Public
  * License along with EvoSuite. If not, see <http://www.gnu.org/licenses/>.
  */
-package org.evosuite.intellij;
+package org.evosuite.intellij.startup;
 
 import com.intellij.openapi.actionSystem.ActionManager;
 import com.intellij.openapi.actionSystem.DefaultActionGroup;
 import com.intellij.openapi.components.ApplicationComponent;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.startup.StartupActivity;
+import org.evosuite.intellij.EvoAction;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -29,11 +32,11 @@ import org.jetbrains.annotations.NotNull;
  * <p>
  * Created by arcuri on 11/1/14.
  */
-public class ApplicationRegistration implements ApplicationComponent {
-    @Override
-    public void initComponent() {
-        EvoAction evo = new EvoAction();
+public class ApplicationRegistration implements StartupActivity {
 
+    @Override
+    public synchronized void runActivity(@NotNull Project project) {
+        EvoAction evo = new EvoAction();
 
         // Gets an instance of the WindowMenu action group.
         //DefaultActionGroup windowM = (DefaultActionGroup) am.getAction("WindowMenu");
@@ -42,23 +45,15 @@ public class ApplicationRegistration implements ApplicationComponent {
 
         ActionManager am = ActionManager.getInstance();
 
-        DefaultActionGroup pvM = (DefaultActionGroup) am.getAction("ProjectViewPopupMenu");
-        pvM.addSeparator();
-        pvM.add(evo);
-
-        DefaultActionGroup epM = (DefaultActionGroup) am.getAction("EditorPopupMenu");
-        epM.addSeparator();
-        epM.add(evo);
+        if (am.getAction("evosuite") == null) {
+            am.registerAction("evosuite", evo);
+            DefaultActionGroup pvM = (DefaultActionGroup) am.getAction("ProjectViewPopupMenu");
+            pvM.addSeparator();
+            pvM.add(evo);
+            DefaultActionGroup epM = (DefaultActionGroup) am.getAction("EditorPopupMenu");
+            epM.addSeparator();
+            epM.add(evo);
+        }
     }
 
-    @Override
-    public void disposeComponent() {
-
-    }
-
-    @NotNull
-    @Override
-    public String getComponentName() {
-        return "EvoSuite Plugin";
-    }
 }

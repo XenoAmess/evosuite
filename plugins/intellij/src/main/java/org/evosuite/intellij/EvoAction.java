@@ -19,52 +19,29 @@
  */
 package org.evosuite.intellij;
 
-import java.awt.Image;
 import java.io.File;
-import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
-import javax.imageio.ImageIO;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.Messages;
-import com.intellij.openapi.util.IconLoader;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
 import org.evosuite.intellij.util.AsyncGUINotifier;
 import org.evosuite.intellij.util.EvoSuiteExecutor;
 
+import static icons.EvosuiteIcons.EVOSUITE_ICON;
+
 /**
  * Created by arcuri on 9/24/14.
  */
 public class EvoAction extends AnAction {
-
-    private static final Icon EVOSUITE_ICON = loadIcon();
-
-    private static Icon loadIcon() {
-        try {
-            Image image = ImageIO.read(
-                    Objects.requireNonNull(
-                            EvoAction.class.getClassLoader().getResourceAsStream("icons/evosuite.png"),
-                            "getResourceAsStream result be null"
-                    )
-            );
-            image = image.getScaledInstance(16, 16, java.awt.Image.SCALE_SMOOTH);
-
-            return new ImageIcon(image);
-        } catch (Exception e) {
-            throw new RuntimeException("EvoAction.loadIcon failed", e);
-        }
-    }
 
     public EvoAction() {
         super(

@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.4.0'
+    id 'org.jetbrains.intellij' version '1.7.0'
 
     id 'application'
     id 'maven'
@@ -21,8 +21,8 @@ allprojects {
     }
 }
 
-group 'org.evosuite.plugin.intellij'
-version '1.0.5'
+group 'com.xenoamess'
+version '1.0.5.2x'
 
 intellij {
     plugins.set(Arrays.asList("com.intellij.java"))
@@ -38,7 +38,7 @@ dependencies {
 // See https://www.jetbrains.com/intellij-repository/releases/
 // See https://www.jetbrains.com/intellij-repository/snapshots/
 intellij {
-    version.set("212.5457.46")
+    version.set("2022.1")
     updateSinceUntilBuild.set(false)
 }
 

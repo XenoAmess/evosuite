@@ -20,14 +20,14 @@
 
 -->
 <idea-plugin version="2">
-  <id>org.evosuite.plugin.intellij</id>
-  <name>EvoSuite</name>
-  <version>1.0.5</version>
-  <vendor email="arcuri82@gmail.com" url="http://www.evosuite.org">EvoSuite</vendor>
+  <id>org.evosuite.plugin.intellij.xenoamess</id>
+  <name>EvoSuite(XenoAmess TPM)</name>
+  <version>1.0.5.2x</version>
+  <vendor email="xenoamess@gmail.com" url="https://github.com/XenoAmess/evosuite">EvoSuite(XenoAmess TPM)</vendor>
 
   <description><![CDATA[
       <p>
-        IntelliJ plugin for the EvoSuite tool, which is used to automatically generate high coverage JUnit tests.
+        IntelliJ plugin (XenoAmess TPM) for the EvoSuite tool, which is used to automatically generate high coverage JUnit tests.
         To generate test cases, EvoSuite uses advanced evolutionary algorithms enhanced by static analysis of
         the bytecode of the tested classes.
       </p>
@@ -75,22 +75,20 @@
     <!-- Add your extensions here -->
   </extensions>
 
-  <application-components>
-    <!-- Add your application components here -->
-      <component>
-          <implementation-class>org.evosuite.intellij.ApplicationRegistration</implementation-class>
-      </component>
-  </application-components>
-
-  <project-components>
-    <!-- Add your project components here -->
-      <component>
-          <implementation-class>org.evosuite.intellij.ProjectRegistration</implementation-class>
-      </component>
-  </project-components>
-
   <actions>
-    <!-- Add your actions here -->
+<!--    <action id="org.evosuite.intellij.EvoAction" class="org.evosuite.intellij.EvoAction" text="Run EvoAction" description="Run EvoAction" icon="EvosuiteIcons.EVOSUITE_ICON">-->
+<!--      <add-to-group group-id="MainToolBar" anchor="last"/>-->
+<!--      <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>-->
+<!--      <add-to-group group-id="ChangesViewPopupMenu" anchor="last"/>-->
+<!--      <add-to-group group-id="EditorPopupMenu" anchor="last"/>-->
+<!--    </action>-->
   </actions>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity
+            implementation="org.evosuite.intellij.startup.ApplicationRegistration"/>
+    <postStartupActivity
+            implementation="org.evosuite.intellij.startup.ProjectRegistration"/>
+  </extensions>
 
 </idea-plugin>
