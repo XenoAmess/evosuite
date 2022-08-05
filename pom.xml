@@ -725,7 +725,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-site-plugin</artifactId>
-                    <version>3.12.0</version>
+                    <version>3.12.1</version>
                 </plugin>
                 <!-- Removed Eclipse m2e lifecycle mapping plugin. For a better solution
                     see: http://stackoverflow.com/questions/7409823/m2e-lifecycle-mapping-not-found -->
