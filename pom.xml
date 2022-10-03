@@ -373,7 +373,7 @@
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-util</artifactId>
-                <version>9.3</version>
+                <version>9.4</version>
             </dependency>
             <dependency>
                 <!-- Apache 2 -->
