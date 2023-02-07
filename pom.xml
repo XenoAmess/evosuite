@@ -279,7 +279,7 @@
             <dependency>
                 <groupId>com.sun.xml.bind</groupId>
                 <artifactId>jaxb-core</artifactId>
-                <version>4.0.0</version>
+                <version>4.0.2</version>
             </dependency>
 
             <dependency>
