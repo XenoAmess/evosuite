@@ -4,23 +4,23 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "develop"
+    target-branch: "master"
     open-pull-requests-limit: 100
   - package-ecosystem: "maven"
     directory: "/plugins/eclipse"
     schedule:
       interval: "daily"
-    target-branch: "develop"
+    target-branch: "master"
     open-pull-requests-limit: 100
   - package-ecosystem: "gradle"
     directory: "/plugins/intellij"
     schedule:
       interval: "daily"
-    target-branch: "develop"
+    target-branch: "master"
     open-pull-requests-limit: 100
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "daily"
-    target-branch: "develop"
+    target-branch: "master"
     open-pull-requests-limit: 100
