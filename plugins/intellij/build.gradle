@@ -20,7 +20,7 @@ allprojects {
 }
 
 group 'com.xenoamess'
-version '1.0.5.2x'
+version '1.0.5.3x'
 
 intellij {
     version.set("2022.1")
