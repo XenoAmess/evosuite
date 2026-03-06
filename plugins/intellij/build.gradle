@@ -1,9 +1,8 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.7.0'
-
+    id 'org.jetbrains.intellij' version '1.17.4'
     id 'application'
-    id "com.github.ben-manes.versions" version "0.53.0"
+    id "com.github.ben-manes.versions" version "0.51.0"
 }
 
 allprojects {
@@ -24,21 +23,12 @@ group 'com.xenoamess'
 version '1.0.5.2x'
 
 intellij {
-    plugins.set(Arrays.asList("com.intellij.java"))
-}
-
-dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-engine:6.0.3'
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:6.0.3'
-}
-
-// See https://github.com/JetBrains/gradle-intellij-plugin/
-// See https://www.jetbrains.org/intellij/sdk/docs/reference_guide/intellij_artifacts.html
-// See https://www.jetbrains.com/intellij-repository/releases/
-// See https://www.jetbrains.com/intellij-repository/snapshots/
-intellij {
     version.set("2022.1")
+    plugins.set(Arrays.asList("com.intellij.java"))
     updateSinceUntilBuild.set(false)
 }
 
-apply plugin: 'org.jetbrains.intellij'
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-engine:5.11.4'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.11.4'
+}

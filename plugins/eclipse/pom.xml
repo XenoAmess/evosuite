@@ -31,15 +31,15 @@
         <jdk>[9,)</jdk>
       </activation>
       <properties>
-        <tycho-version>5.0.2</tycho-version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/2021-09</eclipse-repo.url>
+        <tycho-version>3.0.5</tycho-version>
+        <eclipse-repo.url>http://download.eclipse.org/releases/2023-09</eclipse-repo.url>
       </properties>
     </profile>
   </profiles>
 
   <properties>
-    <tycho-version>5.0.2</tycho-version>
-    <eclipse-repo.url>http://download.eclipse.org/releases/2021-09</eclipse-repo.url>
+    <tycho-version>3.0.5</tycho-version>
+    <eclipse-repo.url>http://download.eclipse.org/releases/2023-09</eclipse-repo.url>
   </properties>
 
   <repositories>
