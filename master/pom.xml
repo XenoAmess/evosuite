@@ -6,6 +6,7 @@
         <groupId>org.evosuite</groupId>
         <artifactId>evosuite</artifactId>
         <version>1.2.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>evosuite-master</artifactId>
