@@ -406,7 +406,7 @@
                 <!-- Apache 2 -->
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
-                <version>2.11.0</version>
+                <version>2.21.0</version>
             </dependency>
             <dependency>
                 <!-- Apache 2 -->
