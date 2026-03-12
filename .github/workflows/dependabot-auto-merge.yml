@@ -2,7 +2,7 @@ name: Dependabot auto-merge
 
 on:
   pull_request:
-    types: [opened, synchronize]
+    types: [opened, synchronize, reopened]
 
 permissions:
   pull-requests: write
@@ -30,14 +30,18 @@ jobs:
             echo "should_merge=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Wait for CI checks
+      - name: Checkout repository
+        if: steps.check.outputs.should_merge == 'true'
+        uses: actions/checkout@v4
+
+      - name: Wait for all checks to pass
         if: steps.check.outputs.should_merge == 'true'
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
-          running-workflow-name: 'Dependabot auto-merge'
+          wait-interval: 20
+          allowed-conclusions: success
 
       - name: Approve dependabot PR
         if: steps.check.outputs.should_merge == 'true'
