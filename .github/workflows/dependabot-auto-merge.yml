@@ -26,20 +26,11 @@ jobs:
           if [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-patch" ]] || \
              [[ "${{ steps.meta.outputs.update-type }}" == "version-update:semver-minor" ]]; then
             echo "should_merge=true" >> $GITHUB_OUTPUT
+            echo "Detected ${{ steps.meta.outputs.update-type }} - will auto-merge"
           else
             echo "should_merge=false" >> $GITHUB_OUTPUT
+            echo "Detected ${{ steps.meta.outputs.update-type }} - skipping auto-merge"
           fi
-
-      - name: Wait for CI checks
-        if: steps.check.outputs.should_merge == 'true'
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 20
-          allowed-conclusions: success
-          # 排除自己的工作流，防止无限循环等待
-          running-workflow-name: 'Dependabot auto-merge'
 
       - name: Approve dependabot PR
         if: steps.check.outputs.should_merge == 'true'
@@ -50,7 +41,10 @@ jobs:
 
       - name: Enable auto-merge with rebase
         if: steps.check.outputs.should_merge == 'true'
-        run: gh pr merge --auto --rebase "$PR_URL"
+        run: |
+          echo "Enabling auto-merge with rebase strategy..."
+          gh pr merge --auto --rebase "$PR_URL"
+          echo "Auto-merge enabled. PR will be merged automatically when all required checks pass."
         env:
           PR_URL: ${{ github.event.pull_request.html_url }}
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
