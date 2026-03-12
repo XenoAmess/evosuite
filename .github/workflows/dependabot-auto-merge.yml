@@ -30,11 +30,7 @@ jobs:
             echo "should_merge=false" >> $GITHUB_OUTPUT
           fi
 
-      - name: Checkout repository
-        if: steps.check.outputs.should_merge == 'true'
-        uses: actions/checkout@v4
-
-      - name: Wait for all checks to pass
+      - name: Wait for CI checks
         if: steps.check.outputs.should_merge == 'true'
         uses: lewagon/wait-on-check-action@v1.3.4
         with:
@@ -42,6 +38,8 @@ jobs:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
           wait-interval: 20
           allowed-conclusions: success
+          # 排除自己的工作流，防止无限循环等待
+          running-workflow-name: 'Dependabot auto-merge'
 
       - name: Approve dependabot PR
         if: steps.check.outputs.should_merge == 'true'
