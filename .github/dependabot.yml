@@ -3,24 +3,96 @@ updates:
   - package-ecosystem: "maven"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Shanghai"
     target-branch: "master"
     open-pull-requests-limit: 100
+    commit-message:
+      prefix: "build(deps)"
+      prefix-development: "build(deps-dev)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "java"
+    groups:
+      maven-minor-and-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      maven-major:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
+
   - package-ecosystem: "maven"
     directory: "/plugins/eclipse"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Shanghai"
     target-branch: "master"
     open-pull-requests-limit: 100
+    commit-message:
+      prefix: "build(deps-eclipse)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "java"
+      - "eclipse"
+    groups:
+      eclipse-minor-and-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      eclipse-major:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
+
   - package-ecosystem: "gradle"
     directory: "/plugins/intellij"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Shanghai"
     target-branch: "master"
     open-pull-requests-limit: 100
+    commit-message:
+      prefix: "build(deps-intellij)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "intellij"
+    groups:
+      intellij-minor-and-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      intellij-major:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["major"]
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
-      interval: "daily"
+      interval: "weekly"
+      day: "monday"
+      time: "04:00"
+      timezone: "Asia/Shanghai"
     target-branch: "master"
     open-pull-requests-limit: 100
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+    groups:
+      github-actions:
+        applies-to: version-updates
+        patterns: ["*"]
