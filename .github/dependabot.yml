@@ -20,10 +20,6 @@ updates:
         applies-to: version-updates
         patterns: ["*"]
         update-types: ["minor", "patch"]
-      maven-major:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["major"]
 
   - package-ecosystem: "maven"
     directory: "/plugins/eclipse"
