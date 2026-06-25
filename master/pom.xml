@@ -33,8 +33,22 @@
                             </execution>
                         </executions>
                         <configuration>
-                            <schemaDirectory>${project.basedir}/src/main/resources/xsd</schemaDirectory>
-                            <packageName>org.evosuite.xsd</packageName>
+                            <!-- jaxb2-maven-plugin 2.x dropped the
+                                 <schemaDirectory>/<packageName> pair in favour
+                                 of <sources> (list of XSDs/directories). The
+                                 XSD here has no targetNamespace, so we drive
+                                 the generated package via a small XJB
+                                 binding file. -->
+                            <sources>
+                                <source>${project.basedir}/src/main/resources/xsd/ctg_project_report.xsd</source>
+                            </sources>
+                            <xjbSources>
+                                <xjbSource>${project.basedir}/src/main/resources/xsd/bindings.xjb</xjbSource>
+                            </xjbSources>
+                            <clearOutputDir>true</clearOutputDir>
+                            <extension>true</extension>
+                            <episodeFileName>ctg_project_report</episodeFileName>
+                            <removeOldOutput>true</removeOldOutput>
                         </configuration>
                         <dependencies>
                             <dependency>
