@@ -34,13 +34,52 @@ public class MSecurityManagerTest {
 
     @BeforeClass
     public static void initClass() {
+        // SecurityManager is deprecated for removal since JDK 17 and starting
+        // with that release System.setSecurityManager throws
+        // UnsupportedOperationException for any non-null manager. The
+        // MSecurityManager (and the whole EvoSuite sandbox that depends on it)
+        // cannot be exercised on those JDKs, so skip the whole class.
+        Assume.assumeTrue(
+                "SecurityManager-based sandbox is not supported on this JDK",
+                securityManagerIsUsable());
         executor = Executors.newCachedThreadPool();
         securityManager = new MSecurityManager();
     }
 
+    /**
+     * Returns true if a custom {@link SecurityManager} can still be installed
+     * on the current runtime. Since JDK 17 {@code System.setSecurityManager}
+     * has been deprecated and starting with JDK 17 it throws
+     * {@link UnsupportedOperationException} when an attempt is made to install
+     * a non-null manager.
+     */
+    private static boolean securityManagerIsUsable() {
+        SecurityManager current = System.getSecurityManager();
+        SecurityManager probe = new SecurityManager() {
+            @Override
+            public void checkPermission(java.security.Permission perm) {
+                // no-op; we just want to know whether installing one is allowed
+            }
+        };
+        try {
+            System.setSecurityManager(probe);
+            return true;
+        } catch (SecurityException | UnsupportedOperationException e) {
+            return false;
+        } finally {
+            try {
+                System.setSecurityManager(current);
+            } catch (SecurityException | UnsupportedOperationException ignored) {
+                // best effort restoration
+            }
+        }
+    }
+
     @AfterClass
     public static void doneWithClass() {
-        executor.shutdownNow();
+        if (executor != null) {
+            executor.shutdownNow();
+        }
     }
 
     @Before

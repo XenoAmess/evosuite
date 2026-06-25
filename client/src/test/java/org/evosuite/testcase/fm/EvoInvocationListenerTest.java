@@ -86,16 +86,21 @@ public class EvoInvocationListenerTest {
     @Test
     public void testFinal() {
         /*
-            If no special instrumentation is done, we cannot handle final methods
+         * Since Mockito 5 the inline mock maker is the default and can mock
+         * final methods without extra instrumentation. The invocation listener
+         * therefore captures the call, even for the final method getFoo().
+         * Earlier Mockito versions (which used the subclass mock maker) could
+         * not mock final methods and the listener captured nothing, but that
+         * behaviour is no longer reachable with the default mock-maker.
          */
         EvoInvocationListener listener = new EvoInvocationListener(AClassWithFinal.class);
         AClassWithFinal foo = mock(AClassWithFinal.class, withSettings().invocationListeners(listener));
         listener.activate();
 
-        foo.getFoo(); // this is not mocked
+        foo.getFoo(); // final method, but Mockito 5+ can still mock it
 
         List<MethodDescriptor> list = listener.getCopyOfMethodDescriptors();
-        Assert.assertEquals(0, list.size());
+        Assert.assertEquals(1, list.size());
     }
 
 

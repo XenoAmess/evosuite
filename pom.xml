@@ -665,7 +665,7 @@
                         <exclude>${exclude.tests.concolic}</exclude>
                         <exclude>${exclude.tests.mimeType}</exclude>
                     </excludes>
-                    <argLine>-Djdk.attach.allowAttachSelf=true -Xms512m -Xmx4096m </argLine>
+                    <argLine>-Djdk.attach.allowAttachSelf=true -Xms512m -Xmx4096m --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED --add-opens java.base/java.util.concurrent=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.net=ALL-UNNAMED --add-opens java.base/sun.nio.ch=ALL-UNNAMED --add-opens java.desktop/java.awt=ALL-UNNAMED --add-opens java.desktop/sun.awt=ALL-UNNAMED --add-opens java.desktop/sun.font=ALL-UNNAMED </argLine>
                 </configuration>
             </plugin>
             <!-- pluging to run tests after 'package' phase in 'integration-test' -->

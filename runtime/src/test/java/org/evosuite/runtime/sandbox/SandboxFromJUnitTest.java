@@ -32,6 +32,13 @@ public class SandboxFromJUnitTest {
 
     @BeforeClass
     public static void initEvoSuiteFramework() {
+        // The EvoSuite sandbox is built on top of java.lang.SecurityManager,
+        // which is deprecated for removal since JDK 17 and can no longer be
+        // installed on JDK 17+. Skip the whole class in that case.
+        Assume.assumeTrue(
+                "SecurityManager-based sandbox is not supported on this JDK",
+                securityManagerIsUsable());
+
         Assert.assertNull(System.getSecurityManager());
 
         Sandbox.initializeSecurityManagerForSUT();
@@ -39,8 +46,41 @@ public class SandboxFromJUnitTest {
 
     }
 
+    /**
+     * Returns true if a custom {@link SecurityManager} can still be installed
+     * on the current runtime. Since JDK 17 {@code System.setSecurityManager}
+     * has been deprecated and starting with JDK 17 it throws
+     * {@link UnsupportedOperationException} when an attempt is made to install
+     * a non-null manager.
+     */
+    private static boolean securityManagerIsUsable() {
+        SecurityManager current = System.getSecurityManager();
+        SecurityManager probe = new SecurityManager() {
+            @Override
+            public void checkPermission(java.security.Permission perm) {
+                // no-op; we just want to know whether installing one is allowed
+            }
+        };
+        try {
+            System.setSecurityManager(probe);
+            return true;
+        } catch (SecurityException | UnsupportedOperationException e) {
+            return false;
+        } finally {
+            try {
+                System.setSecurityManager(current);
+            } catch (SecurityException | UnsupportedOperationException ignored) {
+                // best effort restoration
+            }
+        }
+    }
+
     @AfterClass
     public static void clearEvoSuiteFramework() {
+        if (executor == null) {
+            // initEvoSuiteFramework was skipped via Assume.assumeTrue()
+            return;
+        }
         Assert.assertNotNull(System.getSecurityManager());
 
         executor.shutdownNow();

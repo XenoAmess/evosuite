@@ -53,6 +53,36 @@ public class JUnitAnalyzerTest {
 
     private File file = new File(OpenStream.FILE_NAME);
 
+    /**
+     * Returns true if a custom {@link SecurityManager} can still be installed
+     * on the current runtime. Since JDK 17 {@code System.setSecurityManager}
+     * has been deprecated and starting with JDK 17 it throws
+     * {@link UnsupportedOperationException} when an attempt is made to install
+     * a non-null manager. EvoSuite's sandbox feature relies on this mechanism
+     * and therefore cannot be tested on those JDKs.
+     */
+    private static boolean securityManagerIsUsable() {
+        SecurityManager current = System.getSecurityManager();
+        SecurityManager probe = new SecurityManager() {
+            @Override
+            public void checkPermission(java.security.Permission perm) {
+                // no-op; we just want to know whether installing one is allowed
+            }
+        };
+        try {
+            System.setSecurityManager(probe);
+            return true;
+        } catch (SecurityException | UnsupportedOperationException e) {
+            return false;
+        } finally {
+            try {
+                System.setSecurityManager(current);
+            } catch (SecurityException | UnsupportedOperationException ignored) {
+                // best effort restoration
+            }
+        }
+    }
+
 
     @Before
     public void init() {
@@ -79,6 +109,16 @@ public class JUnitAnalyzerTest {
 
     @Test
     public void testSandboxIssue() throws Exception {
+
+        // EvoSuite's sandbox is implemented on top of java.lang.SecurityManager,
+        // which has been deprecated for removal since JDK 17 and is no longer
+        // installable on JDK 17+ (System.setSecurityManager throws
+        // UnsupportedOperationException). The whole sandbox feature is therefore
+        // broken on modern JDKs and there is no point in exercising this test
+        // path: skip the test on those runtimes.
+        org.junit.Assume.assumeTrue(
+                "SecurityManager-based sandbox is not supported on this JDK",
+                securityManagerIsUsable());
 
         //First, get a TestCase from a carved JUnit
 
