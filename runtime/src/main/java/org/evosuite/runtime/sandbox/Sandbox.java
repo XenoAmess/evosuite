@@ -117,6 +117,40 @@ public class Sandbox {
         return manager != null;
     }
 
+    /**
+     * Returns {@code true} if a custom {@link SecurityManager} can still be
+     * installed on the current runtime.
+     * <p>
+     * Since JDK 17, {@code System.setSecurityManager} has been deprecated
+     * for removal and from that release on it throws
+     * {@link UnsupportedOperationException} for any non-null manager, so the
+     * EvoSuite sandbox (which is built on top of {@code SecurityManager})
+     * cannot be exercised on those JDKs. Tests that need the sandbox can
+     * use this predicate to {@code Assume.assumeTrue(...)} themselves out
+     * of the run on modern JDKs.
+     */
+    public static boolean isSecurityManagerUsable() {
+        SecurityManager current = System.getSecurityManager();
+        SecurityManager probe = new SecurityManager() {
+            @Override
+            public void checkPermission(java.security.Permission perm) {
+                // no-op; we just want to know whether installing one is allowed
+            }
+        };
+        try {
+            System.setSecurityManager(probe);
+            return true;
+        } catch (SecurityException | UnsupportedOperationException e) {
+            return false;
+        } finally {
+            try {
+                System.setSecurityManager(current);
+            } catch (SecurityException | UnsupportedOperationException ignored) {
+                // best effort restoration
+            }
+        }
+    }
+
     public static void goingToExecuteSUTCode() {
         if (!isSecurityManagerInitialized()) {
             if (checkForInitialization) {

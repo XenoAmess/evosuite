@@ -31,6 +31,14 @@ public class Euclidean_ESTest_scaffolding {
 
     @BeforeClass
     public static void initEvoSuiteFramework() {
+        // The EvoSuite sandbox relies on java.lang.SecurityManager, which is
+        // deprecated for removal since JDK 17 and can no longer be installed
+        // there. The example test carver scaffolding exercises that sandbox
+        // and therefore must be skipped on JDK 17+ until the sandbox is
+        // rewritten to use a different mechanism.
+        org.junit.Assume.assumeTrue(
+                "SecurityManager-based sandbox is not supported on this JDK",
+                org.evosuite.runtime.sandbox.Sandbox.isSecurityManagerUsable());
         org.evosuite.runtime.RuntimeSettings.className = "com.examples.with.different.packagename.Euclidean";
         org.evosuite.runtime.GuiSupport.initialize();
         org.evosuite.runtime.RuntimeSettings.maxNumberOfThreads = 100;
