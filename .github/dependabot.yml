@@ -15,11 +15,6 @@ updates:
     labels:
       - "dependencies"
       - "java"
-    groups:
-      maven-minor-and-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
 
   - package-ecosystem: "maven"
     directory: "/plugins/eclipse"
@@ -36,15 +31,6 @@ updates:
       - "dependencies"
       - "java"
       - "eclipse"
-    groups:
-      eclipse-minor-and-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-      eclipse-major:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["major"]
 
   - package-ecosystem: "gradle"
     directory: "/plugins/intellij"
@@ -60,15 +46,6 @@ updates:
     labels:
       - "dependencies"
       - "intellij"
-    groups:
-      intellij-minor-and-patch:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["minor", "patch"]
-      intellij-major:
-        applies-to: version-updates
-        patterns: ["*"]
-        update-types: ["major"]
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -84,7 +61,3 @@ updates:
     labels:
       - "dependencies"
       - "github-actions"
-    groups:
-      github-actions:
-        applies-to: version-updates
-        patterns: ["*"]
