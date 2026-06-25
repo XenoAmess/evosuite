@@ -12,7 +12,6 @@ updates:
     commit-message:
       prefix: "build(deps)"
       prefix-development: "build(deps-dev)"
-      include: "scope"
     labels:
       - "dependencies"
       - "java"
@@ -37,7 +36,6 @@ updates:
     open-pull-requests-limit: 100
     commit-message:
       prefix: "build(deps-eclipse)"
-      include: "scope"
     labels:
       - "dependencies"
       - "java"
@@ -63,7 +61,6 @@ updates:
     open-pull-requests-limit: 100
     commit-message:
       prefix: "build(deps-intellij)"
-      include: "scope"
     labels:
       - "dependencies"
       - "intellij"
@@ -88,7 +85,6 @@ updates:
     open-pull-requests-limit: 100
     commit-message:
       prefix: "ci"
-      include: "scope"
     labels:
       - "dependencies"
       - "github-actions"
