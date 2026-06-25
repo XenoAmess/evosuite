@@ -22,7 +22,9 @@ package org.evosuite.runtime.util;
 import java.nio.file.Paths;
 import org.apache.commons.lang3.StringUtils;
 import org.hamcrest.core.IsEqual;
+import org.junit.Assume;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Rule;
 import org.junit.Test;
@@ -50,6 +52,19 @@ public class JavaExecCmdUtilUnixTest {
     @Before
     public void initTestEnvironment() {
         environmentVariables.set("JAVA_HOME", JAVA_HOME_MOCK_PATH);
+    }
+
+    @BeforeClass
+    public static void onlyOnUnixLikeSystems() {
+        // The tests in this class mock the JVM's view of the host OS to behave
+        // like a Unix system. On Windows the {@code file.separator} system
+        // property is cached at JVM startup and cannot be overridden, so the
+        // mocks do not take effect and the assertions fail. Skip the whole
+        // class on Windows.
+        Assume.assumeFalse(
+                "JavaExecCmdUtilUnixTest only runs on Unix-like systems",
+                System.getProperty("os.name", "").toLowerCase(java.util.Locale.ROOT)
+                        .startsWith("windows"));
     }
 
     @Test
