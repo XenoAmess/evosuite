@@ -8,7 +8,7 @@ updates:
       time: "04:00"
       timezone: "Asia/Shanghai"
     target-branch: "master"
-    open-pull-requests-limit: 100
+    open-pull-requests-limit: 10
     commit-message:
       prefix: "build(deps)"
       prefix-development: "build(deps-dev)"
@@ -24,7 +24,7 @@ updates:
       time: "04:00"
       timezone: "Asia/Shanghai"
     target-branch: "master"
-    open-pull-requests-limit: 100
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "build(deps-eclipse)"
     labels:
@@ -40,7 +40,7 @@ updates:
       time: "04:00"
       timezone: "Asia/Shanghai"
     target-branch: "master"
-    open-pull-requests-limit: 100
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "build(deps-intellij)"
     labels:
@@ -55,7 +55,7 @@ updates:
       time: "04:00"
       timezone: "Asia/Shanghai"
     target-branch: "master"
-    open-pull-requests-limit: 100
+    open-pull-requests-limit: 5
     commit-message:
       prefix: "ci"
     labels:
