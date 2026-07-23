@@ -1,34 +1,34 @@
 plugins {
     id 'java'
-    id 'org.jetbrains.intellij' version '1.17.4'
-    id 'application'
+    id 'org.jetbrains.intellij.platform' version '2.18.1'
     id "com.github.ben-manes.versions" version "0.54.0"
-}
-
-allprojects {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_11
-    compileJava.options.encoding = 'UTF-8'
-    repositories {
-        mavenCentral()
-        mavenLocal()
-        google()
-        maven {
-            url "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-    }
 }
 
 group 'com.xenoamess'
 version '1.0.5.3x'
 
-intellij {
-    version.set("2022.1")
-    plugins.set(Arrays.asList("com.intellij.java"))
-    updateSinceUntilBuild.set(false)
+sourceCompatibility = JavaVersion.VERSION_17
+targetCompatibility = JavaVersion.VERSION_17
+
+compileJava.options.encoding = 'UTF-8'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+    google()
+    maven {
+        url "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    intellijPlatform {
+        defaultRepositories()
+    }
 }
 
 dependencies {
+    intellijPlatform {
+        intellijIdea('2023.3.7')
+        bundledPlugin('com.intellij.java')
+    }
     testImplementation 'org.junit.jupiter:junit-jupiter-engine:6.1.2'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:6.1.2'
 }
