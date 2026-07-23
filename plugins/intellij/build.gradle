@@ -10,6 +10,9 @@ version '1.0.5.3x'
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
 }
 
 compileJava.options.encoding = 'UTF-8'
