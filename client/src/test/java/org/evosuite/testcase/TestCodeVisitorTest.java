@@ -105,7 +105,13 @@ public class TestCodeVisitorTest {
 
         Method m = ClassWithGeneric.class.getDeclaredMethod("hello", FakeAbstractClass.class);
         GenericMethod gm = new GenericMethod(m, ClassWithGeneric.class);
-        TestFactory.getInstance().addMethodFor(tc, genericClass, gm, 2);
+        double defaultReuseProbability = Properties.OBJECT_REUSE_PROBABILITY;
+        Properties.OBJECT_REUSE_PROBABILITY = 1.0;
+        try {
+            TestFactory.getInstance().addMethodFor(tc, genericClass, gm, 2);
+        } finally {
+            Properties.OBJECT_REUSE_PROBABILITY = defaultReuseProbability;
+        }
 
 
         //Check if generic types were correctly analyzed/inferred
