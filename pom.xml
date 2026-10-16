@@ -832,7 +832,7 @@
     </build>
 
     <properties>
-        <asm.version>9.10.1</asm.version>
+        <asm.version>9.11</asm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <deployURL>Needs to be fixed in Jenkins</deployURL>
         <!-- empty by default. activated through profile -->
