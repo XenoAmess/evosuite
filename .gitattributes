@@ -1,0 +1,4 @@
+/mvnw text eol=lf
+/mvnw.cmd text eol=crlf
+/plugins/intellij/gradlew text eol=lf
+/plugins/intellij/gradlew.bat text eol=crlf
