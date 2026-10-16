@@ -18,6 +18,11 @@
     License along with EvoSuite. If not, see <http://www.gnu.org/licenses/>.
 ====
 
-To build the EvoSuite Eclipse Plugin execute
-$ mvn package
+To build the EvoSuite Eclipse Plugin, run from the repository root with JDK 17
+or newer (CI uses JDK 21):
+$ ./mvnw clean install -DskipTests -DskipITs
+$ ./mvnw -f plugins/eclipse/pom.xml clean package -DskipTests -DskipITs
+
+Use mvnw.cmd on Windows. The Maven Wrapper pins Maven 3.9.16 for Tycho
+compatibility. The Eclipse 2023-09 target is resolved against Java 17.
 

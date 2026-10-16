@@ -22,24 +22,17 @@
       <properties>
         <!-- Last version of Tycho that works with Java 8 -->
         <tycho-version>1.7.0</tycho-version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/photon</eclipse-repo.url>
-      </properties>
-    </profile>
-    <profile>
-      <id>Java 9+</id>
-      <activation>
-        <jdk>[9,)</jdk>
-      </activation>
-      <properties>
-        <tycho-version>3.0.5</tycho-version>
-        <eclipse-repo.url>http://download.eclipse.org/releases/2023-09</eclipse-repo.url>
+        <eclipse-repo.url>https://download.eclipse.org/releases/photon</eclipse-repo.url>
+        <eclipse-execution-environment>JavaSE-1.8</eclipse-execution-environment>
       </properties>
     </profile>
   </profiles>
 
   <properties>
-    <tycho-version>3.0.5</tycho-version>
-    <eclipse-repo.url>http://download.eclipse.org/releases/2023-09</eclipse-repo.url>
+    <tycho-version>4.0.13</tycho-version>
+    <eclipse-repo.url>https://download.eclipse.org/releases/2023-09</eclipse-repo.url>
+    <!-- Match the Java requirement of the Eclipse 2023-09 target platform. -->
+    <eclipse-execution-environment>JavaSE-17</eclipse-execution-environment>
   </properties>
 
   <repositories>
@@ -64,8 +57,8 @@
         <artifactId>target-platform-configuration</artifactId>
         <version>${tycho-version}</version>
         <configuration>
-          <resolver>p2</resolver>
           <pomDependencies>consider</pomDependencies>
+          <executionEnvironment>${eclipse-execution-environment}</executionEnvironment>
           <environments>
             <environment>
               <os>linux</os>

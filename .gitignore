@@ -3,6 +3,7 @@
 *.iml
 *~
 target/
+.tycho-consumer-pom.xml
 evosuite-files
 evosuite-report
 evosuite-tests

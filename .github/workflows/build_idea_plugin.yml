@@ -10,6 +10,9 @@ jobs:
   plugins-build:
     runs-on: ${{ matrix.os }}
     continue-on-error: ${{ matrix.experimental }}
+    defaults:
+      run:
+        shell: bash
     strategy:
       matrix:
         os: [ ubuntu-latest , windows-latest ]
@@ -31,11 +34,11 @@ jobs:
           distribution: temurin
       - name: Build
         run: |
-          mvn clean install -DskipTests
+          ./mvnw --version
+          ./mvnw -B -ntp clean install -DskipTests -DskipITs
       - name: Build eclipse plugin
         run: |
-          cd ./plugins/eclipse
-          mvn clean install -DskipTests
+          ./mvnw -B -ntp -f plugins/eclipse/pom.xml clean install -DskipTests -DskipITs
       - name: Build intellij plugin
         run: |
           cd ./plugins/intellij
