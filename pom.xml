@@ -114,7 +114,7 @@
         <profile>
             <id>SystemTests</id>
             <!-- properties>
-                <systemTests>**/*SystemTest.java</systemTests>
+        <systemTests>**/*SystemTest.java</systemTests>
                 <integrationTests>**/*IntTest.java</integrationTests>
             </properties -->
             <properties>
@@ -346,31 +346,31 @@
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm</artifactId>
-                <version>9.10.1</version>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-commons</artifactId>
-                <version>9.10.1</version>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-tree</artifactId>
-                <version>9.10.1</version>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-analysis</artifactId>
-                <version>9.10.1</version>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <!-- Adhoc license, copyright holder is INRIA -->
                 <groupId>org.ow2.asm</groupId>
                 <artifactId>asm-util</artifactId>
-                <version>9.10.1</version>
+                <version>${asm.version}</version>
             </dependency>
             <dependency>
                 <!-- Apache 2 -->
@@ -832,6 +832,7 @@
     </build>
 
     <properties>
+        <asm.version>9.10.1</asm.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <deployURL>Needs to be fixed in Jenkins</deployURL>
         <!-- empty by default. activated through profile -->
