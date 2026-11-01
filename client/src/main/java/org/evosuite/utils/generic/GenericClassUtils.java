@@ -50,11 +50,44 @@ public class GenericClassUtils {
         if (rhsType == null || lhsType == null) return false;
 
         try {
-            return TypeUtils.isAssignable(rhsType, lhsType);
+            boolean assignable = TypeUtils.isAssignable(rhsType, lhsType);
+            if (!assignable && lhsType instanceof ParameterizedType && rhsType instanceof ParameterizedType
+                    && ((ParameterizedType) lhsType).getRawType() == Class.class
+                    && ((ParameterizedType) rhsType).getRawType() == Class.class) {
+                // commons-lang3 3.21.0 (LANG-1749) requires the type arguments of
+                // java.lang.Class to be exactly equal, ignoring wildcards on the
+                // target side, so Class<Integer> is no longer assignable to Class<?>.
+                assignable = isAssignableClassTypeArgument((ParameterizedType) lhsType,
+                        (ParameterizedType) rhsType);
+            }
+            return assignable;
         } catch (Throwable e) {
             logger.debug("Found unassignable type: " + e);
             return false;
         }
+    }
+
+    private static boolean isAssignableClassTypeArgument(ParameterizedType lhsType, ParameterizedType rhsType) {
+        Type lhsArg = lhsType.getActualTypeArguments()[0];
+        Type rhsArg = rhsType.getActualTypeArguments()[0];
+        if (lhsArg.equals(rhsArg)) {
+            return true;
+        }
+        if (lhsArg instanceof WildcardType) {
+            WildcardType wildcard = (WildcardType) lhsArg;
+            for (Type upperBound : wildcard.getUpperBounds()) {
+                if (!TypeUtils.isAssignable(rhsArg, upperBound)) {
+                    return false;
+                }
+            }
+            for (Type lowerBound : wildcard.getLowerBounds()) {
+                if (!TypeUtils.isAssignable(lowerBound, rhsArg)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
     }
 
 
